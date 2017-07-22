@@ -30,3 +30,10 @@ Author: Tang U-Liang
 Email: tang_u_liang@sp.edu.sg
 _________________________________________________________________________
 """
+
+def gcd(m,n):
+    while m%n != 0:
+        m, n = n, m%n
+
+    return n
+
