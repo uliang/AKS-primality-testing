@@ -123,7 +123,7 @@ def main():
     if perfect_power(n):
         return "Composite"
 
-    # get smallest r ... (step 2)
+    r = get_r(n)
 
     for a in range(2, min(r, n-1)+1):
         if n%a == 0:
