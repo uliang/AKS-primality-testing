@@ -53,17 +53,16 @@ def not_perfect_power(n):
     """
     ctx = decimal.getcontext()
     ctx.prec = 1000
-    ctx.flags[decimal.Inexact] = False
-    print(ctx)
-    M = math.floor(math.log(n, 2))+1
+    tol = Decimal('1E-999')
+    
+    # print(ctx)
+    M = math.ceil(math.log(n, 2))
     for b in range(2, M):
-        #ctx.flags[decimal.Rounded] = False
+        
         a = ctx.power(n, ctx.power(b, -1))
-        print(a)
-        print(ctx.flags[decimal.Inexact])
-        #_ = ctx.to_integral_exact(a)
-        #print(_)
-        if not ctx.flags[decimal.Inexact]:
+        # print(a)
+
+        if abs(ctx.to_integral_exact(a)-a) <= tol:
             return False
 
     return True
