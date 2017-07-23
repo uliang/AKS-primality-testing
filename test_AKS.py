@@ -3,7 +3,7 @@ Unit testing module for AKS.py
 """
 
 import unittest
-from AKS import gcd, perfect_power
+from AKS import gcd, perfect_power, ord
 
 class TestPerfectPower(unittest.TestCase):
 
@@ -18,6 +18,14 @@ class TestPerfectPower(unittest.TestCase):
         self.assertTrue(perfect_power(50**60))
         self.assertTrue(perfect_power(6**7))
         self.assertFalse(perfect_power(137))
+
+    def test_ord(self):
+        self.assertEqual(ord(8,3), 2)
+        self.assertEqual(ord(15,2), 4)
+        self.assertEqual(ord(8, 65), 1)
+        self.assertEqual(ord(3, 5), 2)
+        self.assertFalse(ord(6, 4))
+
 
 if __name__ == "__main__":
     unittest.main()

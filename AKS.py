@@ -40,11 +40,35 @@ import sys
 if sys.version_info < (3,):
     input = raw_input
 
+
 def gcd(m,n):
     while m%n != 0:
         m, n = n, m%n
-
+    
     return n
+
+def ord(r, n):
+    """
+    Calculates the multiplicative order of n modulo r.
+    
+    e.g.
+    ord(8,3) = 2
+    ord(15,2) = 4
+    ord(8, 65) = 1
+    ord(3, 5) = 2
+    ord(6, 4) = False as 4 is not coprime to 6
+    
+    Returns
+       int, k such that r^k is congruent to 1 mod n
+       bool, False if n and r are not coprime.
+    """
+    if gcd(r, n) != 1:
+        return False
+
+    i = 1
+    while pow(n, i, r) != 1:
+        i += 1
+    return i
 
 def perfect_power(n):
     """
