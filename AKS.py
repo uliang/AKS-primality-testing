@@ -33,6 +33,8 @@ _________________________________________________________________________
 """
 
 import math
+import decimal
+from decimal import Decimal
 
 
 def gcd(m,n):
@@ -49,12 +51,20 @@ def not_perfect_power(n):
         bool, True indicates that it is not a perfect power. Therefore,
               False indicates that n is composite
     """
+    ctx = decimal.getcontext()
+    ctx.prec = 1000
+    ctx.flags[decimal.Inexact] = False
+    print(ctx)
     M = math.floor(math.log(n, 2))+1
-    
     for b in range(2, M):
-        a = pow(n, 1/b)
-        
-        if math.floor(a)-a == 0:
+        #ctx.flags[decimal.Rounded] = False
+        a = ctx.power(n, ctx.power(b, -1))
+        print(a)
+        print(ctx.flags[decimal.Inexact])
+        #_ = ctx.to_integral_exact(a)
+        #print(_)
+        if not ctx.flags[decimal.Inexact]:
             return False
+
     return True
 
