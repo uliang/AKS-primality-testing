@@ -67,3 +67,9 @@ def not_perfect_power(n):
 
     return True
 
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()
+
