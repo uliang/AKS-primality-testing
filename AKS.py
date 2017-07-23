@@ -73,14 +73,13 @@ def ord(r, n):
 def get_r(n):
     """
     Performs the search for r in the second step of AKS algorithm. 
-    Find smallest r such that ord_r(n) > (log_2(n))^2. Skip r if 
-    r and n are not coprime. 
     
     e.g.
     get_r(31) = 29
     
     Returns
-        int, 
+        int, smallest r such that r and n are coprime such that 
+             ord_r(n) > (log_2(n))^2.
     """
     r = 2
     L = (math.log(n, 2))**2
