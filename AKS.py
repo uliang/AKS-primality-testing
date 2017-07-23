@@ -70,6 +70,27 @@ def ord(r, n):
         i += 1
     return i
 
+def get_r(n):
+    """
+    Performs the search for r in the second step of AKS algorithm. 
+    Find smallest r such that ord_r(n) > (log_2(n))^2. Skip r if 
+    r and n are not coprime. 
+    
+    e.g.
+    get_r(31) = 29
+    
+    Returns
+        int, 
+    """
+    r = 2
+    L = (math.log(n, 2))**2
+    
+    while True:
+        if gcd(r, n) == 1:
+            if ord(r, n) > L:
+                return r
+        r += 1
+
 def perfect_power(n):
     """
     Checks that n is a perfect power i.e. n=a^b for a>1 and b>1
