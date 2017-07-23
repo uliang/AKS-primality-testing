@@ -128,7 +128,7 @@ def main():
         if n%a == 0:
             return "Composite"
 
-    if r <= n:
+    if n <= r:
         return "Prime"
 
 if __name__ == "__main__":
