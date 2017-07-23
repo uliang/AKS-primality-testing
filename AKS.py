@@ -55,7 +55,7 @@ def perfect_power(n):
               False indicates that the algorithm continues.
     """
     ctx = decimal.getcontext()
-    ctx.prec = 1000
+    ctx.prec = 1002
     tol = Decimal('1E-999')
     
     # print(ctx)
