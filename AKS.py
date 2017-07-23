@@ -35,7 +35,10 @@ _________________________________________________________________________
 import math
 import decimal
 from decimal import Decimal
+import sys
 
+if sys.version_info < (3,):
+    input = raw_input
 
 def gcd(m,n):
     while m%n != 0:
@@ -43,13 +46,13 @@ def gcd(m,n):
 
     return n
 
-def not_perfect_power(n):
+def perfect_power(n):
     """
-    Checks that n is not a perfect power i.e. n=a^b for a>1 and b>1
+    Checks that n is a perfect power i.e. n=a^b for a>1 and b>1
     
     Returns
-        bool, True indicates that it is not a perfect power. Therefore,
-              False indicates that n is composite
+        bool, True indicates that it is a perfect power. Therefore,
+              False indicates that the algorithm continues.
     """
     ctx = decimal.getcontext()
     ctx.prec = 1000
@@ -63,12 +66,26 @@ def not_perfect_power(n):
         # print(a)
 
         if abs(ctx.to_integral_exact(a)-a) <= tol:
-            return False
+            return True
 
-    return True
+    return False
 
 def main():
-    pass
+
+    n = input("Enter prime\n>>")
+    n = int(n)
+
+    if perfect_power(n):
+        return "Composite"
+
+    # get smallest r ... (step 2)
+
+    for a in range(2, min(r, n-1)+1):
+        if n%a == 0:
+            return "Composite"
+
+    if r <= n:
+        return "Prime"
 
 if __name__ == "__main__":
     main()
