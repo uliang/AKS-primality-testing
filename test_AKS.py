@@ -3,7 +3,7 @@ Unit testing module for AKS.py
 """
 
 import unittest
-from AKS import gcd, perfect_power, ord, get_r
+from AKS import gcd, perfect_power, ord, get_r, totient
 
 class TestPerfectPower(unittest.TestCase):
 
@@ -29,6 +29,11 @@ class TestPerfectPower(unittest.TestCase):
     def test_get_r(self):
         self.assertEqual(get_r(31), 29)
 
+    def test_totient(self):
+        self.assertEqual(totient(1), 1)
+        self.assertEqual(totient(6), 2)
+        self.assertEqual(totient(8), 4)
+        self.assertEqual(totient(31), 30)
 
 if __name__ == "__main__":
     unittest.main()

@@ -114,6 +114,30 @@ def perfect_power(n):
 
     return False
 
+def totient(n):
+    """
+    Returns
+        int, the number of integers k such that gcd(k,n) = 1.
+    """
+    result = n
+    N = n
+    p = 2
+    while p*p < N:
+        #print("{} {}".format(p, n%p))
+        if n%p == 0:
+            while n%p == 0:
+                n = n//p
+            
+            result -= result//p
+        #print(result)
+        p += 1
+        #print("{} {} n={}".format(p, result,n ))
+
+    if n > 1:
+        result -= result//n
+
+    return result
+
 def main():
 
     n = input("Enter prime\n>>")
