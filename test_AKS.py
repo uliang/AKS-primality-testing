@@ -3,7 +3,8 @@ Unit testing module for AKS.py
 """
 
 import unittest
-from AKS import gcd, perfect_power, order, get_r, totient
+from AKS import (gcd, perfect_power, order, get_r, totient,
+                 check_poly_ncongruence)
 
 
 class TestPerfectPower(unittest.TestCase):
@@ -35,6 +36,9 @@ class TestPerfectPower(unittest.TestCase):
         self.assertEqual(totient(6), 2)
         self.assertEqual(totient(8), 4)
         self.assertEqual(totient(31), 30)
+
+    def test_check_poly_ncongruence(self):
+        self.assertTrue(check_poly_ncongruence(29, 31))
 
 
 if __name__ == "__main__":

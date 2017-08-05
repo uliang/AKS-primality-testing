@@ -31,7 +31,9 @@ Author: Tang U-Liang
 Email: tang_u_liang@sp.edu.sg
 _________________________________________________________________________
 """
-
+import numpy as np
+from sympy import div
+from sympy.abc import x
 import math
 import decimal
 from decimal import Decimal
@@ -41,9 +43,17 @@ if sys.version_info < (3,):
     input = raw_input
 
 
-def check_poly_congruence(r, n):
-    pass
-
+def check_poly_ncongruence(r, n):
+    L = math.floor(math.sqrt(totient(r)*math.log(n,2)))
+    a = 1
+    while a <= L:
+        _ ,rem = div((x+a)**n - (x**n+a), x**r-1, domain="ZZ")
+        rem = rem.as_coefficients_dict().values()
+        rem = np.array(list(rem))
+        if any(rem % n != 0):
+            return False
+        a += 1
+    return True
 
 def gcd(m, n):
     while m % n != 0:
