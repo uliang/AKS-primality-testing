@@ -4,7 +4,7 @@ Unit testing module for AKS.py
 
 import unittest
 from AKS import (gcd, perfect_power, order, get_r, totient,
-                 check_poly_ncongruence)
+                 check_poly_ncongruence, main)
 
 
 class TestPerfectPower(unittest.TestCase):
@@ -40,6 +40,11 @@ class TestPerfectPower(unittest.TestCase):
     def test_check_poly_ncongruence(self):
         self.assertTrue(check_poly_ncongruence(29, 31))
 
+    def test_main(self):
+        self.assertEqual(main(31), "Prime")
+        self.assertEqual(main(2), "Prime")
+        self.assertEqual(main(1000), "Composite")
+        self.assertEqual(main(57), "Composite")
 
 if __name__ == "__main__":
     print(__doc__)

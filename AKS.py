@@ -31,7 +31,7 @@ Author: Tang U-Liang
 Email: tang_u_liang@sp.edu.sg
 _________________________________________________________________________
 """
-import numpy as np
+
 from sympy import div
 from sympy.abc import x
 import math
@@ -44,16 +44,17 @@ if sys.version_info < (3,):
 
 
 def check_poly_ncongruence(r, n):
-    L = math.floor(math.sqrt(totient(r)*math.log(n,2)))
+    L = math.floor(math.sqrt(totient(r)*math.log(n, 2)))
     a = 1
     while a <= L:
-        _ ,rem = div((x+a)**n - (x**n+a), x**r-1, domain="ZZ")
+        _, rem = div((x+a)**n - (x**n+a), x**r-1, domain="ZZ")
         rem = rem.as_coefficients_dict().values()
-        rem = np.array(list(rem))
-        if any(rem % n != 0):
-            return False
+        for c in rem:
+            if c % n != 0:
+                return False
         a += 1
     return True
+
 
 def gcd(m, n):
     while m % n != 0:
@@ -119,8 +120,8 @@ def perfect_power(n):
         False indicates that the algorithm continues.
     """
     ctx = decimal.getcontext()
-    ctx.prec = 102
-    tol = Decimal('1E-99')
+    ctx.prec = 12
+    tol = Decimal('1E-9')
 
     # print(ctx)
     M = math.ceil(math.log(n, 2))
@@ -145,15 +146,12 @@ def totient(n):
     N = n
     p = 2
     while p*p < N:
-        #print("{} {}".format(p, n%p))
         if n % p == 0:
             while n % p == 0:
                 n = n//p
 
             result -= result//p
-        #print(result)
         p += 1
-        #print("{} {} n={}".format(p, result,n ))
 
     if n > 1:
         result -= result//n
@@ -161,24 +159,29 @@ def totient(n):
     return result
 
 
-def main():
-
-    n = input("Enter prime\n>>")
-    n = int(n)
+def main(n):
 
     if perfect_power(n):
         return "Composite"
+    print("Checked perfect power")
 
     r = get_r(n)
-
     for a in range(2, min(r, n-1)+1):
         if n % a == 0:
             return "Composite"
+    print("Checked {} has no small number divisors".format(n))
 
     if n <= r:
+        return "Prime"
+
+    print("Begin polynomial congruence test")
+    if check_poly_ncongruence(r, n):
         return "Prime"
 
 
 if __name__ == "__main__":
     print(sys.version_info)
-    main()
+    n = input("Enter prime\n>>")
+    n = int(n)
+    isPrime = main(n)
+    print(isPrime)
