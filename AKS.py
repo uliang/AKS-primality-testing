@@ -41,6 +41,10 @@ if sys.version_info < (3,):
     input = raw_input
 
 
+def check_poly_congruence(r, n):
+    pass
+
+
 def gcd(m, n):
     while m % n != 0:
         m, n = n, m % n
