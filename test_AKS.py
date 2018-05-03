@@ -45,6 +45,7 @@ class TestPerfectPower(unittest.TestCase):
         self.assertEqual(main(2), "Prime")
         self.assertEqual(main(1000), "Composite")
         self.assertEqual(main(57), "Composite")
+        #self.assertEqual(main(269*277), "Composite") #First Composite to require AKS Step 5
 
 if __name__ == "__main__":
     print(__doc__)
