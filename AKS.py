@@ -32,7 +32,7 @@ Email: tang_u_liang@sp.edu.sg
 _________________________________________________________________________
 """
 
-from sympy import div
+from sympy import div, Symbol, Poly, expand
 from sympy.abc import x
 import math
 import decimal
@@ -44,16 +44,42 @@ if sys.version_info < (3,):
 
 
 def check_poly_ncongruence(r, n):
-    L = math.floor(math.sqrt(totient(r)*math.log(n, 2)))
-    a = 1
-    while a <= L:
-        _, rem = div((x+a)**n - (x**n+a), x**r-1, domain="ZZ")
-        rem = rem.as_coefficients_dict().values()
-        for c in rem:
-            if c % n != 0:
-                return False
-        a += 1
+    L = math.floor(math.sqrt(totient(r))*math.log(n, 2))
+    a = Symbol('a')
+    _, rem = div((x+a)**n - (x**n+a), x**r-1, domain="ZZ")
+    #Possible Alternate calculation for rem
+    #rem = poly_power_mod(x+a, n, x**r-1)
+    #_, rem2 = div(x**n-a, x**r-1, domain="ZZ")
+    #rem -= rem2
+    rem.map_coeffs(lambda c: c%n)
+    aa = 1
+    while aa <= L:
+        remAA = rem
+        remAA.subs({a:aa})
+        remAA.map_coeffs(lambda c: c%n)
+        if remAA != 0:
+            return False
+        aa += 1
     return True
+
+
+def poly_power_mod(base, exponent, quotient):
+   """
+   Needs vetted for matematical accuracy
+   usese same theory as power_mod over the integers
+   except applied to polys using remainders
+   (i just kinda assumed it was isomorphic)
+   """
+   ret = 1
+   _, base = div(base, quotient, domain="ZZ")
+   while exponent > 0:
+      if exponent%2 == 1:
+         _, ret = div(ret*base, quotient, domain="ZZ")
+         
+      exponent=exponent//2
+      _, base = div(base*base, quotient, domain="ZZ")
+      
+   return ret
 
 
 def gcd(m, n):
